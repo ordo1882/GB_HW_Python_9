@@ -20,9 +20,11 @@ def print_message(msg: str):
 
 def show_contacts(book: dict, msg: str):
     if book:
-        max_size = [len(max(field, key=len)) for field in zip(*list(book.values()))]
+        lens = [contact.len_fields() for contact in book.values()]
+        max_size = [max(field) for field in zip(*lens)]
         print('\n' + '='* (sum(max_size) + 10))
         for u_id, contact in book.items():
+            contact = contact.to_list()
             contact_str = '   '.join([f'{contact[i]:<{max_size[i]}}' for i in range(len(contact))])
             print(f'{u_id:>2} {contact_str}')
         print('=' * (sum(max_size) + 10) + '\n')
